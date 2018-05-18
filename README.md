@@ -48,3 +48,7 @@ docker container stop ${CONTAINER ID}
 
 ```
 
+* You can run directly from [DockerHub](https://hub.docker.com/u/gabrielpassos/) with: 
+```
+docker run -p 4000:80 gabrielpassos/get-started:part2
+```
