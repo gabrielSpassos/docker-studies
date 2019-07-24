@@ -16,4 +16,7 @@ docker create --name my-tomcat \
 ```
 
 * Run container
+
+```
 docker create --name my-tomcat tomcat:latest -p 8080:8080
+```
