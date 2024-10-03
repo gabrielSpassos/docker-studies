@@ -49,3 +49,6 @@ docker run -it --name=ulimit-poc_container_name ulimit-poc /bin/bash
 root@c2e9b5659300:/# ulimit -n
 20000
 ```
+
+![Screenshot 2024-10-03 at 08 18 40](https://github.com/user-attachments/assets/769ed5bf-991c-48a6-b6ac-44c46e7a2175)
+
