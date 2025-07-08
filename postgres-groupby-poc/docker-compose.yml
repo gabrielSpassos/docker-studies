@@ -1,0 +1,25 @@
+version: '1'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_groupby_poc
+    restart: always
+    environment:
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: poc
+    ports:
+      - "5432:5432"
+    volumes:
+      - poc_groupby_data:/var/lib/postgresql/data
+      - ./src/schema.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - postgres-groupby-poc
+
+volumes:
+  poc_groupby_data:
+
+networks:
+  postgres-groupby-poc:
+    driver: bridge
