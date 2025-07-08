@@ -2,14 +2,19 @@
 
 > Issue how to get values from column on postgres select that are NOT part of the group by statement
 
-> Error: SQL Error [42803]: ERROR: column "account.created_at" must appear in the GROUP BY clause or be used in an aggregate function
-
 * Works, but not show the created_at
 ```sql
 select user_id, account_number, count(1) as cnt from account
 group by user_id, account_number
 having count(1) > 1;
 ```
+* Errors since the created_at is not part of the group by
+```sql
+select user_id, account_number, created_at, count(1) as cnt from account
+group by user_id, account_number
+having count(1) > 1;
+```
+> Error: SQL Error [42803]: ERROR: column "account.created_at" must appear in the GROUP BY clause or be used in an aggregate function
 
 * Not work because created_at is different
 ```sql
