@@ -4,7 +4,7 @@
 `pip3 install -r requirements.txt`
 
 * Unit test
-`python3 -m unittest -v test_server.py`
+`python3 -m unittest -v app/test/test_server.py`
 
-* It test
+* It test + Unit tests
 `pytest app/test`

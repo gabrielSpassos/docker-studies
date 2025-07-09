@@ -2,7 +2,7 @@
 
 import unittest
 
-from server import create_person
+from app.src.server import create_person
 
 class Test(unittest.TestCase):    
     def test_create_person(self):
