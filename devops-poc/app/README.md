@@ -24,3 +24,13 @@ python3 -m flask --app src/server.py run
 ```bash
 curl --location --request POST 'http://localhost:5000/people'
 ```
+
+* Build docker image
+```bash
+docker build -t flask-poc-app .
+```
+
+* Run container
+```bash
+docker run -d -p 5000:5000 --name flask-app-poc-container flask-poc-app
+```
