@@ -25,6 +25,11 @@ python3 -m flask --app src/server.py run
 curl --location --request POST 'http://localhost:5000/people'
 ```
 
+* Get prometheus metrics
+```bash
+curl --location 'http://localhost:5000/metrics'
+```
+
 * Build docker image
 ```bash
 docker build -t flask-poc-app .
