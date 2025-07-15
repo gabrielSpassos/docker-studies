@@ -17,7 +17,7 @@ pytest app/test
 
 * Run server
 ```bash
-python3 -m flask --app src/server.py run
+python3 -m flask --app src/server.py run --host 0.0.0.0
 ```
 
 * Execute operation
