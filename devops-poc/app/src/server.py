@@ -9,6 +9,14 @@ metrics = PrometheusMetrics(app)
 
 metrics.info('app_info', 'Application info', version='1.0.3')
 
+
+@app.route('/health', methods=['GET']) 
+def get_health_check():
+    health_check = {"status": "UP"}
+    json_response = jsonify(health_check)
+    return json_response
+
+    
 @app.route('/people', methods=['POST']) 
 def create_person_api():
     person = create_person()
