@@ -9,3 +9,5 @@ docker-compose up
 
 * Access grafana http://localhost:3000/
 * User/Pass `admin/admin`
+* Dashboard sample: https://grafana.com/grafana/dashboards/17629-prometheus-flask-exporter-dashboard/
+    * change job name on query
