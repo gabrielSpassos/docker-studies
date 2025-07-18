@@ -17,12 +17,17 @@ pytest app/test
 
 * Run server
 ```bash
-python3 -m flask --app src/server.py run --host 0.0.0.0
+python3 -m flask --app src/server.py run
 ```
 
-* Execute operation
+* Create person
 ```bash
 curl --location --request POST 'http://localhost:5000/people'
+```
+
+* Get person by id
+```bash
+curl --location 'http://localhost:5000/people/{{id}}'
 ```
 
 * Get prometheus metrics

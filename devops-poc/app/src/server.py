@@ -9,6 +9,8 @@ metrics = PrometheusMetrics(app)
 
 metrics.info('app_info', 'Application info', version='1.0.3')
 
+datasource = {}
+
 
 @app.route('/health', methods=['GET']) 
 def get_health_check():
@@ -16,12 +18,20 @@ def get_health_check():
     json_response = jsonify(health_check)
     return json_response
 
-    
+
+@app.route('/people/<id>', methods=['GET'])
+def get_person(id):
+    person = datasource.get(id)
+    if not person:
+        return jsonify({"error": "Person not found"}), 404
+    return jsonify(person)
+
+
 @app.route('/people', methods=['POST']) 
 def create_person_api():
     person = create_person()
+    datasource[str(person['id'])] = person
     json_response = jsonify(person)
-    print(json_response)
     return json_response
 
 
