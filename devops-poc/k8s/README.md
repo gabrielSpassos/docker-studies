@@ -51,5 +51,3 @@ kubectl delete deployment flask-poc-app
 kubectl expose deployment flask-poc-app --type=NodePort --port=5000
 minikube service flask-poc-app
 ```
-
-
