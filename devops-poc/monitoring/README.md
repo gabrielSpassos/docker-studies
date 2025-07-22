@@ -1,3 +1,11 @@
+# Prometheus and Grafana
+
+🔥**Prometheu**s is an open-source monitoring system and time-series database designed for collecting metrics from applications and infrastructure. It scrapes data from endpoints (like /metrics) and stores it for querying and alerting.
+
+📊 **Grafana** is an open-source analytics and visualization tool that connects to data sources like Prometheus. It lets you create real-time, interactive dashboards to monitor your systems and applications.
+
+## Usage
+
 * Start docker containers
 ```bash
 docker-compose up

@@ -1,3 +1,11 @@
+# Kubernetes and Minikube
+
+☸️ **Kubernetes** is an open-source container orchestration platform that automates the deployment, scaling, and management of containerized applications.
+
+🧭 **Minikube** is a local Kubernetes environment that runs a single-node cluster on your machine, ideal for development and testing. It allows you to simulate real-world Kubernetes workflows without needing a full cloud setup.
+
+## Usage
+
 * Start minikub
 ```bash
 minikube start --driver=docker
