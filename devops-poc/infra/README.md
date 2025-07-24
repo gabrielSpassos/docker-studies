@@ -109,7 +109,8 @@ helm install grafana grafana/grafana \
 ```bash
 kubectl port-forward svc/grafana 3000:80
 kubectl port-forward svc/prometheus-server 9090:80
+kubectl port-forward service/flask-poc-app 5000:5000
 ```
 
 * Access grafana at http://localhost:3000 with admin/admin
-* Access prometheus at http://localhost:9090
+* Access prometheus at http://localhost:9090 query `{job="flask-poc-app"}`

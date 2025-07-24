@@ -20,6 +20,11 @@ pytest app/test
 python3 -m flask --app src/server.py run
 ```
 
+* Run seeder
+```bash
+python3 src/seeder.py
+```
+
 * Create person
 ```bash
 curl --location --request POST 'http://localhost:5000/people'
