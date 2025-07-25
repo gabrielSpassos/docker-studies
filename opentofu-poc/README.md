@@ -21,3 +21,6 @@
 | `tofu destroy` | Tears down infrastructure                      |
 
 
+### Install (linux)
+
+* https://opentofu.org/docs/intro/install/deb/#installing-using-the-installer
