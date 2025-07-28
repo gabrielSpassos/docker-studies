@@ -29,10 +29,17 @@ kubectl get service -n jenkins-poc
 * Get `admin` user password
 ```bash
 kubectl get secret --namespace jenkins-poc jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode
-clMmrVOv2W7LPmlBvBg5oe
 ```
+Sample: clMmrVOv2W7LPmlBvBg5oe
 
 * Expose service
 ```bash
 kubectl --namespace jenkins-poc port-forward svc/jenkins 8080:8080
 ```
+
+* Access http://127.0.0.1:8080/ and login with `admin` and the password
+![Login](https://github.com/gabrielSpassos/docker-studies/blob/master/jenkins-poc/resources/jenkins-login.png)
+
+* Hello world job
+![basic-job](https://github.com/gabrielSpassos/docker-studies/blob/master/jenkins-poc/resources/basic-job.png)
+
