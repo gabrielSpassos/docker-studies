@@ -33,6 +33,26 @@ kubectl get nodes -A
 kubectl get pods -A
 ```
 
+* Get deployments
+```bash
+kubectl get deployments -A
+```
+
+* Get services
+```bash
+kubectl get services -A
+```
+
+* Get statefulset
+```bash
+kubectl get statefulsets -A
+```
+
+* Get daemonset
+```bash
+kubectl get daemonset -A
+```
+
 * Describe
 ```bash
 kubectl describe pod <pod-name>
@@ -46,12 +66,6 @@ minikube image load flask-poc-app:latest
 * Deploy
 ```bash
 kubectl apply -f deployment.yaml
-```
-
-* Delete
-```bash
-kubectl delete deployment flask-poc-app
-kubectl delete service flask-poc-app
 ```
 
 * Expose app
@@ -114,3 +128,22 @@ kubectl port-forward service/flask-poc-app 5000:5000
 
 * Access grafana at http://localhost:3000 with admin/admin
 * Access prometheus at http://localhost:9090 query `{job="flask-poc-app"}`
+
+* Delete
+```bash
+kubectl delete deployment grafana
+kubectl delete deployment prometheus-server
+kubectl delete deployment prometheus-kube-state-metrics
+kubectl delete deployment prometheus-prometheus-pushgateway
+kubectl delete deployment flask-poc-app
+kubectl delete service grafana
+kubectl delete service prometheus-server
+kubectl delete service prometheus-alertmanager
+kubectl delete service prometheus-alertmanager-headless 
+kubectl delete service prometheus-kube-state-metrics
+kubectl delete service prometheus-prometheus-node-exporter
+kubectl delete service prometheus-prometheus-pushgateway 
+kubectl delete service flask-poc-app
+kubectl delete statefulset prometheus-alertmanager
+kubectl delete daemonset prometheus-prometheus-node-exporter
+```
