@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'python:3.13-alpine'
+    }
+  }
 
   environment {
     REPO_URL = 'https://github.com/gabrielSpassos/docker-studies.git'
