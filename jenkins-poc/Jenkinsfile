@@ -21,16 +21,16 @@ spec:
 
   stages {
     stage('Clone Repository') {
-      container('python') {
-        steps {
+      steps {
+        container('python') {
           git url: "${REPO_URL}", branch: 'master'
-        }
-      }  
+        } 
+      }
     }
 
     stage('Check Python') {
-      container('python') {  
-        steps {
+      steps {
+        container('python') {  
           sh 'python --version'
           sh 'pip --version'
         }
