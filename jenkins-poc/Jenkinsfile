@@ -14,7 +14,6 @@ spec:
 """
     }
   }
-  
 
   environment {
     REPO_URL = 'https://github.com/gabrielSpassos/docker-studies.git'
@@ -22,33 +21,41 @@ spec:
 
   stages {
     stage('Clone Repository') {
-      steps {
-        git url: "${REPO_URL}", branch: 'master'
-      }
+      container('python') {
+        steps {
+          git url: "${REPO_URL}", branch: 'master'
+        }
+      }  
     }
 
     stage('Check Python') {
-      steps {
-        sh 'python --version'
-        sh 'pip --version'
+      container('python') {  
+        steps {
+          sh 'python --version'
+          sh 'pip --version'
+        }
       }
     }
 
     stage('Install Dependencies') {
       steps {
-        dir('devops-poc/app') {
-          sh 'echo "Installing dependencies..."'
-          sh 'pip install -r requirements.txt'
+        container('python') {  
+          dir('devops-poc/app') {
+            sh 'echo "Installing dependencies..."'
+            sh 'pip install -r requirements.txt'
+          }
         }
-      }
+      } 
     }
 
     stage('Run Tests') {
       steps {
-        dir('devops-poc/app') {
-          sh 'echo "Running tests..."'
-          sh 'pytest test'
-          pytest app/test
+        container('python') {  
+          dir('devops-poc/app') {
+            sh 'echo "Running tests..."'
+            sh 'pytest test'
+            pytest app/test
+          }
         }
       }
     }
