@@ -54,7 +54,7 @@ spec:
           dir('devops-poc/app') {
             sh 'echo "Running tests..."'
             sh 'pytest test'
-            pytest app/test
+            sh 'pytest app/test'
           }
         }
       }
