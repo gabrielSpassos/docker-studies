@@ -46,3 +46,13 @@ kubectl --namespace jenkins-poc port-forward svc/jenkins 8080:8080
 * Job with jenkinsfile, cloning repo and running application tests
 ![success-job](https://github.com/gabrielSpassos/docker-studies/blob/master/jenkins-poc/resources/success-job.png)
 
+* Delete
+```bash
+kubectl get pods -A
+kubectl get services -A
+kubectl get statefulsets -A
+
+kubectl delete service jenkins -n jenkins-poc
+kubectl delete service jenkins-agent -n jenkins-poc
+kubectl delete statefulset jenkins -n jenkins-poc
+```
