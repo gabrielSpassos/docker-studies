@@ -43,3 +43,6 @@ kubectl --namespace jenkins-poc port-forward svc/jenkins 8080:8080
 * Hello world job
 ![basic-job](https://github.com/gabrielSpassos/docker-studies/blob/master/jenkins-poc/resources/basic-job.png)
 
+* Job with jenkinsfile, cloning repo and running application tests
+![success-job](https://github.com/gabrielSpassos/docker-studies/blob/master/jenkins-poc/resources/success-job.png)
+
