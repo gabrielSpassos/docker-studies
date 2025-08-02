@@ -23,13 +23,13 @@ provider "kubernetes" {
 
 resource "kubernetes_namespace" "devops_poc_application_namespace" {
   metadata {
-    name = "devops_poc_application_namespace"
+    name = "devops-poc-application-namespace"
   }
 }
 
 resource "kubernetes_namespace" "devops_poc_infra_namespace" {
   metadata {
-    name = "devops_poc_infra_namespace"
+    name = "devops-poc-infra-namespace"
   }
 }
 
@@ -38,7 +38,7 @@ resource "helm_release" "prometheus" {
   name       = "prometheus"
   chart      = "prometheus"
   repository = "https://prometheus-community.github.io/helm-charts"
-  version    = "25.21.0"
+  version    = "27.28.2"
   namespace  = kubernetes_namespace.devops_poc_infra_namespace.metadata[0].name
   create_namespace = false
   values     = [file("${path.module}/values/prometheus-values.yaml")]
@@ -49,17 +49,17 @@ resource "helm_release" "grafana" {
   name       = "grafana"
   chart      = "grafana"
   repository = "https://grafana.github.io/helm-charts"
-  version    = "7.3.9"
-  namespace  = "monitoring"
-  create_namespace = true
+  version    = "9.3.0"
+  namespace  = kubernetes_namespace.devops_poc_infra_namespace.metadata[0].name
+  create_namespace = false
   values     = [file("${path.module}/values/grafana-values.yaml")]
 }
 
 # Deploy local application (Kubernetes YAML)
-resource "kubernetes_manifest" "my_app_deployment" {
-  manifest = yamldecode(file("${path.module}/app/deployment.yaml"))
+resource "kubernetes_manifest" "flask_poc_app_deployment" {
+  manifest = yamldecode(file("${path.cwd}/../app/deployment.yaml"))
 }
 
-resource "kubernetes_manifest" "my_app_service" {
-  manifest = yamldecode(file("${path.module}/app/service.yaml"))
+resource "kubernetes_manifest" "flask_poc_app_service" {
+  manifest = yamldecode(file("${path.cwd}/../app/service.yaml"))
 }

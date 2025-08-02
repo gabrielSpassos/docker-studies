@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask_poc_app
+  namespace: devops-poc-application-namespace
+  labels:
+    app: flask_poc_app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask_poc_app
+  template:
+    metadata:
+      labels:
+        app: flask_poc_app
+    spec:
+      containers:
+      - name: flask_poc_app
+        image: flask-poc-app:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
