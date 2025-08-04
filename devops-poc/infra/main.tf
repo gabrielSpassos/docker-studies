@@ -55,6 +55,18 @@ resource "helm_release" "grafana" {
   values     = [file("${path.module}/values/grafana-values.yaml")]
 }
 
+# Install Jenkins
+resource "helm_release" "jenkins" {
+  name       = "jenkins"
+  chart      = "jenkins"
+  repository = "https://charts.jenkins.io"
+  version    = "5.8.72"
+  namespace  = kubernetes_namespace.devops_poc_infra_namespace.metadata[0].name
+  create_namespace = false
+
+  values = [file("${path.module}/values/jenkins-values.yaml")]
+}
+
 # Deploy local application (Kubernetes YAML)
 resource "kubernetes_manifest" "flask_poc_app_deployment" {
   manifest = yamldecode(file("${path.cwd}/../app/deployment.yaml"))

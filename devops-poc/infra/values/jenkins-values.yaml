@@ -1,0 +1,13 @@
+controller:
+  admin:
+    username: admin
+    password: admin
+  serviceType: NodePort
+
+service:
+  type: NodePort
+  port: 8080
+  nodePort: 30003
+
+persistence:
+  enabled: false  # Disable PVC if running for demo/testing

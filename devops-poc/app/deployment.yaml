@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask_poc_app
+  name: flask-poc-app
   namespace: devops-poc-application-namespace
   labels:
-    app: flask_poc_app
+    app: flask-poc-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flask_poc_app
+      app: flask-poc-app
   template:
     metadata:
       labels:
-        app: flask_poc_app
+        app: flask-poc-app
     spec:
       containers:
-      - name: flask_poc_app
+      - name: flask-poc-app
         image: flask-poc-app:latest
         imagePullPolicy: Never
         ports:

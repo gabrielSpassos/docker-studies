@@ -146,4 +146,8 @@ kubectl delete service prometheus-prometheus-pushgateway
 kubectl delete service flask-poc-app
 kubectl delete statefulset prometheus-alertmanager
 kubectl delete daemonset prometheus-prometheus-node-exporter
+helm uninstall prometheus -n default
+kubectl delete clusterrole prometheus-kube-state-metrics
+helm uninstall grafana -n default
+kubectl delete clusterrole grafana-clusterrole
 ```

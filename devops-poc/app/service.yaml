@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: flask_poc_app
+  name: flask-poc-app
   namespace: devops-poc-application-namespace
   labels:
-    app: flask_poc_app
+    app: flask-poc-app
 spec:
   type: NodePort
   ports:
     - port: 5000
       targetPort: 5000
-      nodePort: 5000
+      nodePort: 30001
   selector:
-    app: flask_poc_app
+    app: flask-poc-app
