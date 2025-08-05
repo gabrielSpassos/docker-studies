@@ -85,36 +85,13 @@ resource "helm_release" "grafana" {
   values     = [file("${path.module}/values/grafana-values.yaml")]
 }
 
-# Expose Grafana service
-resource "kubernetes_ingress_v1" "grafana" {
-  metadata {
-    name      = "grafana-ingress"
-    namespace = kubernetes_namespace.devops_poc_infra_namespace.metadata[0].name
-    annotations = {
-      "nginx.ingress.kubernetes.io/rewrite-target" = "/"
-    }
+resource "null_resource" "port_forward_grafana" {
+  provisioner "local-exec" {
+    command = "nohup kubectl port-forward svc/grafana -n devops-poc-infra-namespace 3000:80 >/dev/null 2>&1 &"
+    interpreter = ["/bin/bash", "-c"]
   }
-  spec {
-    rule {
-      http {
-        path {
-          path = "/"
-          path_type = "Prefix"
-          backend {
-            service {
-              name = "grafana"
-              port {
-                number = 3000
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+  depends_on = [helm_release.grafana]
 }
-
-
 
 # Install Jenkins
 resource "helm_release" "jenkins" {

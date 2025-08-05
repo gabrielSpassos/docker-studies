@@ -2,5 +2,6 @@ adminPassword: admin
 
 service:
   type: NodePort
-  port: 3000
   nodePort: 30002
+  port: 80
+  targetPort: 3000
