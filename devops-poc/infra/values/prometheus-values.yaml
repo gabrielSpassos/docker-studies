@@ -5,5 +5,5 @@ pushgateway:
 
 service:
   type: NodePort
-  port: 9000
+  port: 9090
   nodePort: 30004

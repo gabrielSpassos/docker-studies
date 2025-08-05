@@ -44,6 +44,36 @@ resource "helm_release" "prometheus" {
   values     = [file("${path.module}/values/prometheus-values.yaml")]
 }
 
+# Expose Prometheus service
+resource "kubernetes_ingress_v1" "prometheus" {
+  metadata {
+    name      = "prometheus-ingress"
+    namespace = kubernetes_namespace.devops_poc_infra_namespace.metadata[0].name
+    annotations = {
+      "nginx.ingress.kubernetes.io/rewrite-target" = "/"
+    }
+  }
+  spec {
+    rule {
+      host = "prometheus.local"
+      http {
+        path {
+          path = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "prometheus-server"
+              port {
+                number = 9090
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 # Install Grafana
 resource "helm_release" "grafana" {
   name       = "grafana"
@@ -54,6 +84,37 @@ resource "helm_release" "grafana" {
   create_namespace = false
   values     = [file("${path.module}/values/grafana-values.yaml")]
 }
+
+# Expose Grafana service
+resource "kubernetes_ingress_v1" "grafana" {
+  metadata {
+    name      = "grafana-ingress"
+    namespace = kubernetes_namespace.devops_poc_infra_namespace.metadata[0].name
+    annotations = {
+      "nginx.ingress.kubernetes.io/rewrite-target" = "/"
+    }
+  }
+  spec {
+    rule {
+      http {
+        path {
+          path = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "grafana"
+              port {
+                number = 3000
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
 
 # Install Jenkins
 resource "helm_release" "jenkins" {
