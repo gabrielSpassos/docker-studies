@@ -1,6 +1,7 @@
 ### Run
 
 ```
+minikube start --driver=docker
 kubectl config use-context minikube # Switch context to minikube
 tofu init                           # Sets up providers
 tofu plan                           # Previews what will be created
@@ -8,13 +9,15 @@ tofu apply                          # Deploys infrastructure
 tofu destroy                        # Deletes infrastructure
 ```
 
-Flask App → http://localhost:30001
+Flask App → http://localhost:5000/health
 
-Grafana → http://localhost:30002
+Grafana → http://localhost:3000
+* admin/admin
 
-Jenkins → http://localhost:30003
+Jenkins → http://localhost:8080
+* admin/admin
 
-Prometheus → http://localhost:30004
+Prometheus → http://localhost:9090
 
 * Get nodes
 ```bash

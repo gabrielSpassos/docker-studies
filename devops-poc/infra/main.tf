@@ -11,15 +11,16 @@ terraform {
   }
 }
 
+provider "kubernetes" {
+  config_path = "~/.kube/config"
+}
+
 provider "helm" {
   kubernetes = {
     config_path = "~/.kube/config"
   }
 }
 
-provider "kubernetes" {
-  config_path = "~/.kube/config"
-}
 
 resource "kubernetes_namespace" "devops_poc_application_namespace" {
   metadata {
@@ -44,6 +45,16 @@ resource "helm_release" "prometheus" {
   values     = [file("${path.module}/values/prometheus-values.yaml")]
 }
 
+# Port forward Prometheus (localhost:9090)
+resource "null_resource" "port_forward_prometheus" {
+  provisioner "local-exec" {
+    command     = "nohup kubectl port-forward svc/prometheus-server -n devops-poc-infra-namespace 9090:80 >/dev/null 2>&1 &"
+    interpreter = ["/bin/bash", "-c"]
+  }
+
+  depends_on = [helm_release.prometheus]
+}
+
 # Install Grafana
 resource "helm_release" "grafana" {
   name       = "grafana"
@@ -53,6 +64,16 @@ resource "helm_release" "grafana" {
   namespace  = kubernetes_namespace.devops_poc_infra_namespace.metadata[0].name
   create_namespace = false
   values     = [file("${path.module}/values/grafana-values.yaml")]
+}
+
+# Port forward Grafana (localhost:3000)
+resource "null_resource" "port_forward_grafana" {
+  provisioner "local-exec" {
+    command     = "nohup kubectl port-forward svc/grafana -n devops-poc-infra-namespace 3000:80 >/dev/null 2>&1 &"
+    interpreter = ["/bin/bash", "-c"]
+  }
+
+  depends_on = [helm_release.grafana]
 }
 
 # Install Jenkins
@@ -67,6 +88,16 @@ resource "helm_release" "jenkins" {
   values = [file("${path.module}/values/jenkins-values.yaml")]
 }
 
+# Port forward Jenkins (localhost:8080)
+resource "null_resource" "port_forward_jenkins" {
+  provisioner "local-exec" {
+    command     = "nohup kubectl port-forward svc/jenkins -n devops-poc-infra-namespace 8080:80 >/dev/null 2>&1 &"
+    interpreter = ["/bin/bash", "-c"]
+  }
+
+  depends_on = [helm_release.jenkins]
+}
+
 # Deploy local application (Kubernetes YAML)
 resource "kubernetes_manifest" "flask_poc_app_deployment" {
   manifest = yamldecode(file("${path.cwd}/../app/deployment.yaml"))
@@ -74,4 +105,14 @@ resource "kubernetes_manifest" "flask_poc_app_deployment" {
 
 resource "kubernetes_manifest" "flask_poc_app_service" {
   manifest = yamldecode(file("${path.cwd}/../app/service.yaml"))
+}
+
+# Port forward Flask App (localhost:5000)
+resource "null_resource" "port_forward_flask" {
+  provisioner "local-exec" {
+    command     = "nohup kubectl port-forward svc/flask-poc-app -n devops-poc-application-namespace 5000:80 >/dev/null 2>&1 &"
+    interpreter = ["/bin/bash", "-c"]
+  }
+
+  depends_on = [kubernetes_manifest.flask_poc_app_service]
 }

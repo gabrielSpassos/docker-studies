@@ -1,7 +1,13 @@
-service:
-  type: LoadBalancer
-  port: 80
-  targetPort: 3000
-
 adminUser: admin
 adminPassword: admin
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+  
+persistence:
+  enabled: false
+
+ingress:
+  enabled: false
