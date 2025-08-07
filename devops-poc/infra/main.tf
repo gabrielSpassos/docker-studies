@@ -44,36 +44,6 @@ resource "helm_release" "prometheus" {
   values     = [file("${path.module}/values/prometheus-values.yaml")]
 }
 
-# Expose Prometheus service
-resource "kubernetes_ingress_v1" "prometheus" {
-  metadata {
-    name      = "prometheus-ingress"
-    namespace = kubernetes_namespace.devops_poc_infra_namespace.metadata[0].name
-    annotations = {
-      "nginx.ingress.kubernetes.io/rewrite-target" = "/"
-    }
-  }
-  spec {
-    rule {
-      host = "prometheus.local"
-      http {
-        path {
-          path = "/"
-          path_type = "Prefix"
-          backend {
-            service {
-              name = "prometheus-server"
-              port {
-                number = 9090
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 # Install Grafana
 resource "helm_release" "grafana" {
   name       = "grafana"
@@ -83,14 +53,6 @@ resource "helm_release" "grafana" {
   namespace  = kubernetes_namespace.devops_poc_infra_namespace.metadata[0].name
   create_namespace = false
   values     = [file("${path.module}/values/grafana-values.yaml")]
-}
-
-resource "null_resource" "port_forward_grafana" {
-  provisioner "local-exec" {
-    command = "nohup kubectl port-forward svc/grafana -n devops-poc-infra-namespace 3000:80 >/dev/null 2>&1 &"
-    interpreter = ["/bin/bash", "-c"]
-  }
-  depends_on = [helm_release.grafana]
 }
 
 # Install Jenkins

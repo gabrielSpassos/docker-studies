@@ -3,7 +3,8 @@ alertmanager:
 pushgateway:
   enabled: false
 
-service:
-  type: NodePort
-  port: 9090
-  nodePort: 30004
+server:
+  service:
+    type: NodePort
+    port: 80
+    nodePort: 30004
