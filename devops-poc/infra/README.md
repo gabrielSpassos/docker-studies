@@ -9,8 +9,11 @@ tofu destroy                        # Deletes infrastructure
 ```
 
 Flask App → http://localhost:30001
+
 Grafana → http://localhost:30002
+
 Jenkins → http://localhost:30003
+
 Prometheus → http://localhost:30004
 
 * Get nodes
@@ -20,7 +23,7 @@ kubectl get nodes -A
 
 * Get pods
 ```bash
-kubectl get pods -A
+kubectl get pods -n devops-poc-infra-namespace
 ```
 
 * Get deployments
@@ -30,7 +33,13 @@ kubectl get deployments -A
 
 * Get services
 ```bash
-kubectl get services -A
+kubectl get services -n devops-poc-infra-namespace
+```
+
+* Get details on services
+```bash
+kubectl describe service grafana -n devops-poc-infra-namespace
+kubectl describe service prometheus-server -n devops-poc-infra-namespace
 ```
 
 * Get statefulset
@@ -42,3 +51,5 @@ kubectl get statefulsets -A
 ```bash
 kubectl get daemonset -A
 ```
+
+minikube service grafana -n devops-poc-infra-namespace --url
