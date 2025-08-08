@@ -1,0 +1,83 @@
+pipeline {
+  agent {
+    kubernetes {
+      yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: python
+    image: "python:3.11"
+    command:
+    - cat
+    tty: true
+"""
+    }
+  }
+
+  environment {
+    REPO_URL = 'https://github.com/gabrielSpassos/docker-studies.git'
+  }
+
+  stages {
+    stage('Clone Repository') {
+      steps {
+        container('python') {
+          git url: "${REPO_URL}", branch: 'master'
+        } 
+      }
+    }
+
+    stage('Check Python') {
+      steps {
+        container('python') {  
+          sh 'python --version'
+          sh 'pip --version'
+        }
+      }
+    }
+
+    stage('Install Dependencies') {
+      steps {
+        container('python') {  
+          dir('devops-poc/app') {
+            sh 'echo "Installing dependencies..."'
+            sh 'pip install -r requirements.txt'
+          }
+        }
+      } 
+    }
+
+    stage('Run Tests') {
+      steps {
+        container('python') {  
+          dir('devops-poc/app') {
+            sh 'echo "Running tests..."'
+            sh 'pytest test'
+          }
+        }
+      }
+
+      post {
+        success {
+            echo 'All tests passed ✅'
+        }
+        failure {
+            echo 'Tests failed ❌'
+        }
+      }
+    }
+  }
+
+  post {
+    always {
+      echo 'Job finished.'
+    }
+    success {
+      echo 'Pipeline Passed ✅'
+    }
+    failure {
+      echo 'Pipeline Failed ❌'
+    }
+  }
+}
