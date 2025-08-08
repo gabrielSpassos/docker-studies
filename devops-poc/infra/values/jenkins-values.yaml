@@ -5,6 +5,13 @@ controller:
   serviceType: NodePort
   servicePort: 80
   nodePort: 30003
+  serviceAccount:
+    create: true
+    name: jenkins
+  rbac:
+    create: true
+  clusterRole:
+    create: true
 
 persistence:
   enabled: false

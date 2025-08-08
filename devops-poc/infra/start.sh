@@ -2,7 +2,7 @@
 
 echo "\nStarting infra and services..."
 
-# minikube start --driver=docker
+minikube start --driver=docker
 
 kubectl config use-context minikube
 
