@@ -11,6 +11,18 @@ spec:
     command:
     - cat
     tty: true
+  - name: helm
+    image: alpine/helm:3.14.4
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - name: kubeconfig
+      mountPath: /root/.kube
+  volumes:
+  - name: kubeconfig
+    secret:
+      secretName: jenkins-kubeconfig
 """
     }
   }
@@ -67,6 +79,20 @@ spec:
         }
       }
     }
+
+    stage('Deploy with Helm') {
+      steps {
+        container('helm') {
+          dir('devops-poc/app') {
+            sh '''
+              helm upgrade --install flask-poc-app ./helm-chart \
+                --namespace devops-poc-application-namespace
+            '''
+          }
+        }
+      }
+    }
+
   }
 
   post {
