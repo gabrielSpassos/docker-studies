@@ -9,3 +9,9 @@ server:
     nodePort: 30001
     port: 80
     targetPort: 9090
+
+scrape_configs:
+  - job_name: flask-poc-app
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['flask-poc-app.devops-poc-application-namespace.svc.cluster.local:5000']

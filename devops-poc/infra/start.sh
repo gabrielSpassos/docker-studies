@@ -13,7 +13,9 @@ tofu apply -auto-approve
 echo "\nWaiting for services to be ready..."
 sleep 20
 
-kubectl create secret generic jenkins-kubeconfig --from-file=config=$HOME/.kube/config -n devops-poc-infra-namespace
+kubectl config view --minify --flatten > /tmp/kubeconfig-jenkins
+kubectl delete secret jenkins-kubeconfig -n devops-poc-infra-namespace || true
+kubectl create secret generic jenkins-kubeconfig --from-file=config=/tmp/kubeconfig-jenkins -n devops-poc-infra-namespace
 
 nohup kubectl port-forward svc/prometheus-server 30001:80 \
   -n devops-poc-infra-namespace --address 0.0.0.0 > prometheus.log 2>&1 &
