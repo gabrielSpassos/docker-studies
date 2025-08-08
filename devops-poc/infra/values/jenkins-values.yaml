@@ -2,8 +2,9 @@ controller:
   admin:
     username: admin
     password: admin
-  serviceType: ClusterIP
+  serviceType: NodePort
   servicePort: 80
+  nodePort: 30003
 
 persistence:
   enabled: false
