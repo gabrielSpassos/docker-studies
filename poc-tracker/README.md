@@ -20,7 +20,12 @@ Such system must be secure and have proper login and be able to support Realtime
 - Single Relational DB
 - Other Clouds that are not AWS
 
-# Components
+## Components
 
 - [AWS Cloud Front](CloudFront.md)
 - [AWS Route 53](Route53.md)
+- [AWS Global Accelerator](GlobalAccelerator.md)
+
+# Questions
+
+- [why should I use route53 and global accelerator?](Route53AndGlobalAccelerator.md)
