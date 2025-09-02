@@ -25,6 +25,8 @@ Such system must be secure and have proper login and be able to support Realtime
 - [AWS Cloud Front](CloudFront.md)
 - [AWS Route 53](Route53.md)
 - [AWS Global Accelerator](GlobalAccelerator.md)
+- [AWS Keycloak Authorizer with User Credentials](KeycloakAuthorizer.md)
+- [AWS EKS](EKS.md)
 
 # Questions
 
