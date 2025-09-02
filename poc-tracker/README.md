@@ -23,3 +23,4 @@ Such system must be secure and have proper login and be able to support Realtime
 # Components
 
 - [AWS Cloud Front](CloudFront.md)
+- [AWS Route 53](Route53.md)
