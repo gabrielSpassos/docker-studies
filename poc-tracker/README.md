@@ -28,6 +28,9 @@ Such system must be secure and have proper login and be able to support Realtime
 - [AWS Keycloak Authorizer with User Credentials](KeycloakAuthorizer.md)
 - [AWS EKS](EKS.md)
 - [AWS EKS Ingress](EKS-Ingress.md)
+- [AWS X-Ray](X-Ray.md)
+- [Kotlin and Jetpack Compose](Kotlin-Jetpack.md)
+- [Swift and SwiftUI](Swift-SwiftUI.md)
 
 # Questions
 
