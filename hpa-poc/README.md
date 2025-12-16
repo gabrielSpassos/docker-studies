@@ -23,7 +23,7 @@ minikube kubectl top nodes
 4. Build app docker image
 ```bash
 eval $(minikube docker-env) 
-docker build -t cpu-burner ./app
+docker build -t cpu-burner:latest ./app
 ```
 
 5. Apply
@@ -37,8 +37,19 @@ minikube kubectl -- apply -f app/infra/service.yaml
 minikube kubectl -- get pods --all-namespaces
 ```
 
-7. Delete 
+7. Describe
+```bash
+minikube kubectl -- describe pod cpu-burner-5868d6cf6c-k9qh5
+```
+
+8. Delete 
 ```bash
 minikube kubectl -- delete deployment cpu-burner
 minikube kubectl -- delete service cpu-burner
+```
+
+9. Restart
+
+```bash
+minikube kubectl -- rollout restart deployment cpu-burner
 ```
