@@ -17,8 +17,28 @@ minikube start --cpus=2 --memory=4096 --driver=docker
 3. Enable metrics
 ```bash
 minikube addons enable metrics-server
-kubectl top nodes
+minikube kubectl top nodes
 ```
 
+4. Build app docker image
 ```bash
+eval $(minikube docker-env) 
+docker build -t cpu-burner ./app
+```
+
+5. Apply
+```bash
+minikube kubectl -- apply -f app/infra/deployment.yaml
+minikube kubectl -- apply -f app/infra/service.yaml
+```
+
+6. List pods
+```bash
+minikube kubectl -- get pods --all-namespaces
+```
+
+7. Delete 
+```bash
+minikube kubectl -- delete deployment cpu-burner
+minikube kubectl -- delete service cpu-burner
 ```
