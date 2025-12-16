@@ -39,7 +39,7 @@ minikube kubectl -- get pods --all-namespaces
 
 7. Describe
 ```bash
-minikube kubectl -- describe pod cpu-burner-5868d6cf6c-k9qh5
+minikube kubectl -- describe pod cpu-burner-5868d6cf6c-4r7rv
 ```
 
 8. Delete 
