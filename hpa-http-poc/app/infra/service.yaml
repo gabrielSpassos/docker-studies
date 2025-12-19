@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-metrics-app
+  labels:
+    app: http-metrics-app
+spec:
+  selector:
+    app: http-metrics-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5000
+
