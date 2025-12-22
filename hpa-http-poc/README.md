@@ -54,44 +54,47 @@ docker build -t http-metrics-app:latest ./app
 
 7. Apply
 ```bash
-minikube kubectl -- apply -f app/infra/deployment.yaml
-minikube kubectl -- apply -f app/infra/service.yaml
+kubectl -- apply -f app/infra/deployment.yaml
+kubectl -- apply -f app/infra/service.yaml
 helm upgrade prometheus-adapter prometheus-community/prometheus-adapter \
   --values app/infra/adapter-config.yaml
+kubectl apply -f app/infra/servicemonitor.yaml
+kubectl apply -f app/infra/hpa.yaml
 ```
 
 8. List pods
 ```bash
-minikube kubectl -- get pods --all-namespaces
+kubectl -- get pods --all-namespaces
 ```
 
 9. Describe
 ```bash
-minikube kubectl -- describe pod http-metrics-app-5d84dd7b7b-cn5xm
+kubectl -- describe pod http-metrics-app-5d84dd7b7b-cn5xm
 ```
 
 10. Get Logs
 ```bash
-minikube kubectl logs deployment/http-metrics-app
+kubectl logs deployment/http-metrics-app
 ```
 
-11. Fetch service url
+11. Expose service
 ```bash
-minikube service cpu-burner --url
+kubectl port-forward svc/http-metrics-app 8080:80
 ```
 
 12. Stress service
 * `-n 50000` => 50k HTTP requests
 * `-c 20` => 20 simultaneous clients
 ```bash
-ab -n 50000 -c 20 http://192.168.49.2:30080/
+ab -n 5000 -c 20 http://localhost:8080/
 ```
 
 13. Observe HPA
 ```bash
-minikube kubectl get pods -w
-minikube kubectl top pods
-minikube kubectl describe hpa cpu-burner-hpa
+kubectl get hpa
+kubectl describe hpa http-metrics-hpa
+kubectl get pods -w
+kubectl get hpa -w
 ```
 
 ### Clean Up 

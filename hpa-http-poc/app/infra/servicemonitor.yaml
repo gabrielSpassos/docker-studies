@@ -2,8 +2,10 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: http-metrics-app
+  namespace: default
   labels:
-    release: monitoring
+    release: monitoring     # REQUIRED (lowercase)
+    Release: monitoring     # harmless but keep for clarity
 spec:
   selector:
     matchLabels:
