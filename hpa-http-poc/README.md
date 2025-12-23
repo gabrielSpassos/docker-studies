@@ -25,18 +25,18 @@ sudo mv kubectl /usr/local/bin/kubectl
 kubectl version --client
 ```
 
-3. Start Cluster
+4. Start Cluster
 ```bash
 minikube start --cpus=2 --memory=4096 --driver=docker
 ```
 
-4. Enable metrics
+5. Enable metrics
 ```bash
 minikube addons enable metrics-server
 minikube kubectl top nodes
 ```
 
-5. Install Prometheus
+6. Install Prometheus
 ```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
@@ -46,13 +46,13 @@ helm install prometheus-adapter prometheus-community/prometheus-adapter
 minikube kubectl -- get pods --namespace default
 ```
 
-6. Build app docker image
+7. Build app docker image
 ```bash
 eval $(minikube docker-env)
 docker build -t http-metrics-app:latest ./app
 ```
 
-7. Apply
+8. Apply
 ```bash
 kubectl -- apply -f app/infra/deployment.yaml
 kubectl -- apply -f app/infra/service.yaml
@@ -62,34 +62,34 @@ kubectl apply -f app/infra/servicemonitor.yaml
 kubectl apply -f app/infra/hpa.yaml
 ```
 
-8. List pods
+9. List pods
 ```bash
 kubectl -- get pods --all-namespaces
 ```
 
-9. Describe
+10. Describe
 ```bash
 kubectl -- describe pod http-metrics-app-5d84dd7b7b-cn5xm
 ```
 
-10. Get Logs
+11. Get Logs
 ```bash
 kubectl logs deployment/http-metrics-app
 ```
 
-11. Expose service
+12. Expose service
 ```bash
 kubectl port-forward svc/http-metrics-app 8080:80
 ```
 
-12. Stress service
+13. Stress service
 * `-n 50000` => 50k HTTP requests
 * `-c 20` => 20 simultaneous clients
 ```bash
 ab -n 5000 -c 20 http://localhost:8080/
 ```
 
-13. Observe HPA
+14. Observe HPA
 ```bash
 kubectl get hpa
 kubectl describe hpa http-metrics-hpa
