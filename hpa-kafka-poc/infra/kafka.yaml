@@ -1,19 +1,23 @@
-# kafka.yaml
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: poc-kafka
+  namespace: kafka
 spec:
   kafka:
-    replicas: 1
     listeners:
       - name: plain
         port: 9092
         type: internal
         tls: false
-    storage:
-      type: ephemeral
-  zookeeper:
-    replicas: 1
-    storage:
-      type: ephemeral
+    config:
+      process.roles: "broker,controller"
+      node.id: 0
+      controller.quorum.voters: "0@poc-kafka-pool-0.poc-kafka-pool.kafka.svc:9093"
+      listeners: "PLAINTEXT://:9092,CONTROLLER://:9093"
+      listener.security.protocol.map: "PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT"
+      controller.listener.names: "CONTROLLER"
+      inter.broker.listener.name: "PLAINTEXT"
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}

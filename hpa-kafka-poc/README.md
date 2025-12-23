@@ -40,12 +40,13 @@ minikube addons enable metrics-server
 kubectl create namespace kafka
 kubectl apply -n kafka \
   -f https://strimzi.io/install/latest?namespace=kafka
+kubectl apply -n kafka -f infra/kafka-nodepool.yaml
 kubectl apply -n kafka -f infra/kafka.yaml
 kubectl apply -n kafka -f infra/kafka-exporter-deployment.yaml
 kubectl apply -n kafka -f infra/kafka-exporter-service.yaml
 
 kubectl -n kafka get pods
-kubectl -n kafka get svc kafka-exporter
+kubectl -n kafka get svc
 ```
 
 7. Validate metrics
@@ -62,8 +63,8 @@ docker build -t kafka-consumer:latest ./app
 
 8. Apply
 ```bash
-kubectl -- apply -f app/infra/deployment.yaml
-kubectl -- apply -f app/infra/hpa.yaml
+kubectl apply -f app/infra/deployment.yaml
+kubectl apply -f app/infra/hpa.yaml
 kubectl get pods
 ```
 
@@ -71,11 +72,11 @@ kubectl get pods
 ```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm install monitoring prometheus-community/kube-prometheus-stack
-kubectl get pods -n monitoring
+kubectl get pods
 kubectl -n kafka get svc kafka-exporter --show-labels
-kubectl apply -n monitoring -f kafka-exporter-servicemonitor.yaml
-kubectl get servicemonitor -n monitoring
-kubectl -n monitoring port-forward svc/monitoring-kube-prometheus-stack-prometheus 9090
+kubectl apply -f infra/kafka-exporter-servicemonitor.yaml
+kubectl get servicemonitor
+kubectl port-forward svc/monitoring-kube-prometheus-stack-prometheus 9090
 ```
 
 metrics: `kafka_consumergroup_lag`
@@ -92,4 +93,11 @@ kubectl -n kafka exec -it poc-kafka-kafka-0 -- \
 ```bash
 kubectl get hpa
 kubectl get pods -w
+```
+
+## Clean up
+
+1. Destroy all cluster
+```bash
+minikube delete --all --purge
 ```
