@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ws-client
+spec:
+  parallelism: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: ws-client
+          image: ws-client:latest
+          imagePullPolicy: IfNotPresent
