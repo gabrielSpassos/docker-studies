@@ -1,5 +1,14 @@
 # Open Search POC
 
+### How it works
+
+* Data Ingestion: Data (logs, metrics, documents) is fed into OpenSearch via APIs or connectors.
+* Indexing: The data is processed and stored using an inverted index, a map of terms to the documents containing them, making searches incredibly fast.
+* Distributed Storage: Indices are divided into primary shards, which are replicated across nodes (replica shards) for high * availability and read scaling.
+* Querying: Users send complex search requests (using DSL, SQL, etc.) to the cluster.
+* Distributed Execution: The query is processed in parallel across relevant shards.
+* Results Aggregation: Results from shards are combined and ranked (e.g., with BM25) before being returned.
+
 ### Usage
 
 * Start container
