@@ -1,18 +1,27 @@
+use std::sync::Arc;
+
 use reqwest::Client;
 
-pub async fn run() -> Result<(), Box<dyn std::error::Error>> {
-    let client = Client::builder()
-        .danger_accept_invalid_certs(true)
-        .build()?; // let ALPN negotiate HTTP/2
+pub fn create_client() -> Arc<Client> {
 
-    let res = client
+    Arc::new(
+        Client::builder()
+            .danger_accept_invalid_certs(true)
+            .build()
+            .unwrap()
+    )
+}
+
+pub async fn request(
+    client: Arc<Client>,
+) -> Result<(), Box<dyn std::error::Error>> {
+
+    let response = client
         .get("https://localhost:8443/data")
         .send()
         .await?;
 
-    println!("Version: {:?}", res.version());
-    println!("HTTP/2 Status: {}", res.status());
-    println!("Body: {}", res.text().await?);
+    response.error_for_status()?;
 
     Ok(())
 }

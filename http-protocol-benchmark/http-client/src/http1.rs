@@ -1,16 +1,26 @@
+use std::sync::Arc;
+
 use reqwest::Client;
 
-pub async fn run() -> Result<(), Box<dyn std::error::Error>> {
-    let client = Client::builder()
-        .build()?; // default = HTTP/1.1
+pub fn create_client() -> Arc<Client> {
 
-    let res = client
+    Arc::new(
+        Client::builder()
+            .build()
+            .unwrap()
+    )
+}
+
+pub async fn request(
+    client: Arc<Client>,
+) -> Result<(), Box<dyn std::error::Error>> {
+
+    let response = client
         .get("http://localhost:8080/data")
         .send()
         .await?;
 
-    println!("HTTP/1.1 Status: {}", res.status());
-    println!("Body: {}", res.text().await?);
+    response.error_for_status()?;
 
     Ok(())
 }
