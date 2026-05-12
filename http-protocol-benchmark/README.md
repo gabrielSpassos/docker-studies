@@ -28,9 +28,12 @@ openssl req -x509 -newkey rsa:2048 -nodes \
 docker compose up --build
 ```
 
-3. Validate
-```
-curl http://localhost:8080/data
-curl -k https://localhost:8443/data
-curl -k --http3 https://localhost:8444/data
+3. Run Client
+```bash
+cd http-client
+cargo run -- http1
+cargo run -- http2
+# 1000 requests / 100 concurrent tasks
+cargo run -- http1 1000 100
+cargo run -- http2 1000 100
 ```
