@@ -1,6 +1,5 @@
 mod http1;
 mod http2;
-mod http3;
 
 use std::env;
 
@@ -9,7 +8,7 @@ async fn main() {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
-        eprintln!("Usage: cargo run -- <http1|http2|http3>");
+        eprintln!("Usage: cargo run -- <http1|http2>");
         return;
     }
 
@@ -18,9 +17,8 @@ async fn main() {
     let result = match protocol {
         "http1" => http1::run().await,
         "http2" => http2::run().await,
-        "http3" => http3::run().await,
         _ => {
-            eprintln!("Invalid option. Use http1 | http2 | http3");
+            eprintln!("Invalid option. Use http1 | http2");
             return;
         }
     };
