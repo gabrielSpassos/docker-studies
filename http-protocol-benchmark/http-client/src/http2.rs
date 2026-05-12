@@ -14,7 +14,7 @@ pub fn create_client() -> Arc<Client> {
 
 pub async fn request(
     client: Arc<Client>,
-) -> Result<(), Box<dyn std::error::Error>> {
+) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
     let response = client
         .get("https://localhost:8443/data")

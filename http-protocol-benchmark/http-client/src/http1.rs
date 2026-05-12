@@ -10,10 +10,10 @@ pub fn create_client() -> Arc<Client> {
             .unwrap()
     )
 }
-
+    
 pub async fn request(
     client: Arc<Client>,
-) -> Result<(), Box<dyn std::error::Error>> {
+) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
     let response = client
         .get("http://localhost:8080/data")

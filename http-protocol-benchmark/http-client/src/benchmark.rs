@@ -13,7 +13,7 @@ pub async fn run_benchmark<C, F, Fut>(
 where
     C: Send + Sync + 'static,
     F: Fn(Arc<C>) -> Fut + Send + Sync + Copy + 'static,
-    Fut: Future<Output = Result<(), Box<dyn std::error::Error>>> + Send,
+    Fut: Future<Output = Result<(), Box<dyn std::error::Error + Send + Sync>>> + Send,
 {
     let semaphore = Arc::new(Semaphore::new(concurrency));
 

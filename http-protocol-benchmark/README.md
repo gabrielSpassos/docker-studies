@@ -35,3 +35,29 @@ cd http-client
 cargo run --release -- http1 10000 100
 cargo run --release -- http2 10000 100
 ```
+
+* HTTP 1
+```
+=================================
+Requests: 10000
+Concurrency: 100
+Total Duration: 12.92s
+Requests/sec: 773.89
+Average latency: 128.04 ms
+P95 latency: 185 ms
+P99 latency: 188 ms
+=================================
+```
+
+* HTTP 2
+```
+=================================
+Requests: 10000
+Concurrency: 100
+Total Duration: 12.47s
+Requests/sec: 801.86
+Average latency: 123.48 ms
+P95 latency: 158 ms
+P99 latency: 187 ms
+=================================
+```
